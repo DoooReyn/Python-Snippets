@@ -23,9 +23,9 @@ def searchFileWithSuffix(targetPath='/', targetSuffix='.py'):
     else:
         for rootDir, subFolder, files in os.walk(targetPath):
             for f in files:
-                beforeIdx= f.find(targetSuffix)
-                afterIdx = len(f)-len(targetSuffix)
-                if beforeIdx != 1 and afterIdx == beforeIdx :
+                filename = os.path.join(rootDir, f)
+                extendName = os.path.splitext(filename)[1]
+                if extendName == targetSuffix:
                     print(f)
                     fileCount += 1
                     # print(os.path.join(rootDir, f))
