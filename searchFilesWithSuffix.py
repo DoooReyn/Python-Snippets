@@ -26,9 +26,9 @@ def searchFileWithSuffix(targetPath='/', targetSuffix='.py'):
                 filename = os.path.join(rootDir, f)
                 extendName = os.path.splitext(filename)[1]
                 if extendName == targetSuffix:
-                    print(f)
+                    # print(f)
                     fileCount += 1
-                    # print(os.path.join(rootDir, f))
+                    print(os.path.join(rootDir, f))
 
     print('[search results ] get %d files' % fileCount)
 
