@@ -1,7 +1,9 @@
 import os
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
+import encoding
+
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('utf8')
 # import encoding
 
 def getTargetPath():
@@ -9,7 +11,7 @@ def getTargetPath():
     while(isPathRight):
         targetPath = str(raw_input('input target path (/) : '))
         if not os.path.exists(targetPath):
-            print('path error')
+            print('wrong target path')
         else:
             isPathRight = False
     return targetPath
@@ -26,7 +28,18 @@ def getTargetName():
     return targetName
 
 
-def multi_rename(targetPath, targetName):
+def getSuffixName():
+    isSuffixRight = True
+    while(isSuffixRight):
+        suffixName = raw_input('input suffix name (.py) : ')
+        if suffixName != '' and suffixName.find('.') != -1 :
+            isSuffixRight = False
+        else:
+            print('wrong suffix name')
+    return suffixName
+
+
+def multi_rename(targetPath, targetName, suffixName):
     fileCount = 0
 
     for rootDir, subFolder, files in os.walk(targetPath):
@@ -34,12 +47,12 @@ def multi_rename(targetPath, targetName):
             if rootDir == targetPath:
                 filename = os.path.join(rootDir, f)
                 if os.path.isfile(filename):
-                    print('filename: %s' % filename)
-                    fileCount += 1
                     extendName = os.path.splitext(filename)[1]
-                    newName = os.path.join(rootDir, targetName+'_'+str(fileCount)+extendName)
-                    print('newname: %s' % newName)
-                    os.rename(filename, newName)
+                    if suffixName == extendName:
+                        fileCount += 1
+                        newName = os.path.join(rootDir, targetName+'_'+str(fileCount)+extendName)
+                        print('rename: %s' % newName)
+                        os.rename(filename, newName)
                 elif os.path.isdir(filename):
                     print('directory: %s' % filename)
                 else:
@@ -47,6 +60,8 @@ def multi_rename(targetPath, targetName):
 
 
 if __name__ == '__main__':
+    encoding.setEnconding()
     targetPath = getTargetPath()
+    suffixName = getSuffixName()
     targetName = getTargetName()
-    multi_rename(targetPath, targetName)
+    multi_rename(targetPath, targetName, suffixName)
