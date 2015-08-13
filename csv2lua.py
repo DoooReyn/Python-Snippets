@@ -22,8 +22,8 @@ def write_lua_tail(fp):
     fp.write('}\n\nreturn data')
 
 
-def write_lua_key(key, fp):
-    fp.write('\t')
+def write_lua_key(key, fp, tab=1):
+    fp.write('\t'*tab)
     if key.isdigit():
         fp.write('[')
         fp.write(key)
@@ -31,7 +31,6 @@ def write_lua_key(key, fp):
     else:
         fp.write(key)
     fp.write(' = ')
-
 
 def write_lua_value(value, fp):
     if value.isdigit():
