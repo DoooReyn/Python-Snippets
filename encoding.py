@@ -1,4 +1,4 @@
-# encoding=utf8
+#!/usr/bin/python
 import sys
 
 def setEnconding()
